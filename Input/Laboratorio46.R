@@ -1,0 +1,62 @@
+# Hecho con gusto por Leislie R. Manjarrez O.
+
+# Laboratorio 46- Grafico lineal con ggplot2
+
+# Instalar paqueterias
+install.packages("gapminder")
+install.packages("ggplot2")
+
+# Llamar la librerias
+library(gapminder)
+library(ggplot2)
+
+# Cargar los datos al entorno
+data("gapminder")
+
+# Filtrando un solo pais
+gapminderIndia = gapminder[gapminder$country == "India",]
+
+# Visualizo datos filtrados
+head(gapminderIndia)
+
+# Crear un grafico lineal
+ggplot(data = gapminderIndia,
+       mapping = aes(x= year,
+                     y= lifeExp)) +
+  geom_line()
+
+# Modificar algunos atributos del grafico lineal
+ggplot(data = gapminderIndia,
+       mapping = aes(x= year,
+                     y= lifeExp)) +
+  geom_line(linetype = "dashed",
+            color = "red")
+
+# Modificar algunos atributos del grafico lineal
+ggplot(data = gapminderIndia,
+       mapping = aes(x= year,
+                     y= lifeExp)) +
+  geom_line(linetype = "dashed",
+            color = "red",
+            arrow = arrow(),
+            size = 2) +
+  geom_point(size = 3)
+
+# Hacer un vector con los paises de habla hispana
+hispan_vector = c ('Argentina', 'Brazil','Bolivia', 'Chile', 'Colombia', 'Costa Rica', 
+                   'Cuba', 'Dominican Republic', 'Ecuador', 'El Salvador', 'Guatemala', 
+                   'Honduras', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 
+                   'Puerto Rico', 'Uruguay', 'Venezuela')
+
+# Crear un objeto con los paises de habla hispana
+gapminder_hispan = gapminder[gapminder$country %in% hispan_vector,]
+
+# Crear grafico del nuevo objeto
+ggplot(data = gapminder_hispan,
+       mapping = aes(x= year,
+                     y= lifeExp,
+                     color = country)) +
+  geom_line()
+
+# Exportar archivo
+write.csv(gapminder_hispan, file = "Hispan.csv")
